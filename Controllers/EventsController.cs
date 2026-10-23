@@ -1,39 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using EventManagementSystem.Data;
 using EventManagementSystem.Models;
 
 namespace EventManagementSystem.Controllers
 {
     public class EventsController : Controller
     {
-        private static List<Event> events = new List<Event>
-        {
-            new Event
-            {
-                Id = 1,
-                Name = "Tech Expo 2026",
-                Description = "A technology showcase for students.",
-                Date = new DateTime(2026, 11, 14),
-                StartTime = new TimeSpan(9, 0, 0),
-                EndTime = new TimeSpan(16, 0, 0),
-                Venue = "Pretoria Convention Centre",
-                MaximumAttendees = 500
-            },
+        private readonly AppDbContext _context;
 
-            new Event
-            {
-                Id = 2,
-                Name = "Game Development Meetup",
-                Description = "A meetup for aspiring game developers.",
-                Date = new DateTime(2026, 11, 28),
-                StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(15, 0, 0),
-                Venue = "Innovation Hub",
-                MaximumAttendees = 120
-            }
-        };
-
-        public IActionResult Index()
+        public EventsController(AppDbContext context)
         {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            List<Event> events = await _context.Events.ToListAsync();
+
             return View(events);
         }
 
@@ -44,26 +28,24 @@ namespace EventManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Event eventItem)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Event eventItem)
         {
             if (!ModelState.IsValid)
             {
                 return View(eventItem);
             }
 
-            eventItem.Id = events.Count > 0
-                ? events.Max(e => e.Id) + 1
-                : 1;
-
-            events.Add(eventItem);
+            _context.Events.Add(eventItem);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            Event? eventItem = events.FirstOrDefault(e => e.Id == id);
+            Event? eventItem = await _context.Events.FindAsync(id);
 
             if (eventItem == null)
             {
@@ -74,14 +56,16 @@ namespace EventManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Event eventItem)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Event eventItem)
         {
             if (!ModelState.IsValid)
             {
                 return View(eventItem);
             }
 
-            Event? existingEvent = events.FirstOrDefault(e => e.Id == eventItem.Id);
+            Event? existingEvent =
+                await _context.Events.FindAsync(eventItem.Id);
 
             if (existingEvent == null)
             {
@@ -96,13 +80,15 @@ namespace EventManagementSystem.Controllers
             existingEvent.Venue = eventItem.Venue;
             existingEvent.MaximumAttendees = eventItem.MaximumAttendees;
 
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Event? eventItem = events.FirstOrDefault(e => e.Id == id);
+            Event? eventItem = await _context.Events.FindAsync(id);
 
             if (eventItem == null)
             {
@@ -114,16 +100,17 @@ namespace EventManagementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Event? eventItem = events.FirstOrDefault(e => e.Id == id);
+            Event? eventItem = await _context.Events.FindAsync(id);
 
             if (eventItem == null)
             {
                 return NotFound();
             }
 
-            events.Remove(eventItem);
+            _context.Events.Remove(eventItem);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
