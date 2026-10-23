@@ -1,7 +1,36 @@
+@model List<EventManagementSystem.Models.Event>
+
 @{
     ViewData["Title"] = "Events";
 }
 
 <h1>Events</h1>
 
-<p>Event management will appear here.</p>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Venue</th>
+            <th>Capacity</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var eventItem in Model)
+        {
+            <tr>
+                <td>@eventItem.Name</td>
+                <td>@eventItem.Date.ToString("dd MMM yyyy")</td>
+                <td>
+                    @eventItem.StartTime.ToString(@"hh\:mm")
+                    -
+                    @eventItem.EndTime.ToString(@"hh\:mm")
+                </td>
+                <td>@eventItem.Venue</td>
+                <td>@eventItem.MaximumAttendees</td>
+            </tr>
+        }
+    </tbody>
+</table>
