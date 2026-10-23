@@ -1,0 +1,57 @@
+@model EventManagementSystem.Models.Event
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<h1>Create Event</h1>
+
+<form asp-action="Create" method="post">
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    <div>
+        <label asp-for="Date"></label>
+        <input asp-for="Date" type="date" />
+        <span asp-validation-for="Date"></span>
+    </div>
+
+    <div>
+        <label asp-for="StartTime"></label>
+        <input asp-for="StartTime" type="time" />
+        <span asp-validation-for="StartTime"></span>
+    </div>
+
+    <div>
+        <label asp-for="EndTime"></label>
+        <input asp-for="EndTime" type="time" />
+        <span asp-validation-for="EndTime"></span>
+    </div>
+
+    <div>
+        <label asp-for="Venue"></label>
+        <input asp-for="Venue" />
+        <span asp-validation-for="Venue"></span>
+    </div>
+
+    <div>
+        <label asp-for="MaximumAttendees"></label>
+        <input asp-for="MaximumAttendees" type="number" />
+        <span asp-validation-for="MaximumAttendees"></span>
+    </div>
+
+    <button type="submit">Create Event</button>
+
+</form>
+
+<a asp-action="Index">Back to Events</a>
