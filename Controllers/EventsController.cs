@@ -98,5 +98,34 @@ namespace EventManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Event? eventItem = events.FirstOrDefault(e => e.Id == id);
+
+            if (eventItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventItem);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            Event? eventItem = events.FirstOrDefault(e => e.Id == id);
+
+            if (eventItem == null)
+            {
+                return NotFound();
+            }
+
+            events.Remove(eventItem);
+
+            return RedirectToAction("Index");
+        }
     }
 }
