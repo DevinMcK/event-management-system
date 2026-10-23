@@ -16,6 +16,7 @@
             <th>Time</th>
             <th>Venue</th>
             <th>Capacity</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
@@ -32,6 +33,7 @@
                 </td>
                 <td>@eventItem.Venue</td>
                 <td>@eventItem.MaximumAttendees</td>
+                <td><a asp-action="Edit" asp-route-id="@eventItem.Id">Edit</a></td>
             </tr>
         }
     </tbody>

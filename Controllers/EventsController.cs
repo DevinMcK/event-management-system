@@ -59,5 +59,44 @@ namespace EventManagementSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Event? eventItem = events.FirstOrDefault(e => e.Id == id);
+
+            if (eventItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventItem);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Event eventItem)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(eventItem);
+            }
+
+            Event? existingEvent = events.FirstOrDefault(e => e.Id == eventItem.Id);
+
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            existingEvent.Name = eventItem.Name;
+            existingEvent.Description = eventItem.Description;
+            existingEvent.Date = eventItem.Date;
+            existingEvent.StartTime = eventItem.StartTime;
+            existingEvent.EndTime = eventItem.EndTime;
+            existingEvent.Venue = eventItem.Venue;
+            existingEvent.MaximumAttendees = eventItem.MaximumAttendees;
+
+            return RedirectToAction("Index");
+        }
     }
 }
