@@ -1,0 +1,33 @@
+@model EventManagementSystem.Models.Venue
+
+@{
+    ViewData["Title"] = "Create Venue";
+}
+
+<h1>Create Venue</h1>
+
+<form asp-action="Create" method="post">
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div>
+        <label asp-for="Address"></label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address"></span>
+    </div>
+
+    <div>
+        <label asp-for="Capacity"></label>
+        <input asp-for="Capacity" type="number" />
+        <span asp-validation-for="Capacity"></span>
+    </div>
+
+    <button type="submit">Create Venue</button>
+
+</form>
+
+<a asp-action="Index">Back to Venues</a>

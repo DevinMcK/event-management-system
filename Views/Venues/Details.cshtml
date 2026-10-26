@@ -1,0 +1,26 @@
+@model EventManagementSystem.Models.Venue
+
+@{
+    ViewData["Title"] = "Venue Details";
+}
+
+<h1>Venue Details</h1>
+
+<h2>@Model.Name</h2>
+
+<p>
+    <strong>Address:</strong>
+    @Model.Address
+</p>
+
+<p>
+    <strong>Capacity:</strong>
+    @Model.Capacity
+</p>
+
+<a asp-action="Edit"
+   asp-route-id="@Model.Id">Edit Venue</a>
+
+|
+
+<a asp-action="Index">Back to Venues</a>

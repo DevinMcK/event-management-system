@@ -1,0 +1,35 @@
+@model EventManagementSystem.Models.Venue
+
+@{
+    ViewData["Title"] = "Edit Venue";
+}
+
+<h1>Edit Venue</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div>
+        <label asp-for="Address"></label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address"></span>
+    </div>
+
+    <div>
+        <label asp-for="Capacity"></label>
+        <input asp-for="Capacity" type="number" />
+        <span asp-validation-for="Capacity"></span>
+    </div>
+
+    <button type="submit">Save Changes</button>
+
+</form>
+
+<a asp-action="Index">Back to Venues</a>

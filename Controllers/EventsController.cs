@@ -22,6 +22,19 @@ namespace EventManagementSystem.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            Event? eventItem = await _context.Events.FindAsync(id);
+
+            if (eventItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventItem);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();

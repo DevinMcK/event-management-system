@@ -34,6 +34,7 @@
                 <td>@eventItem.Venue</td>
                 <td>@eventItem.MaximumAttendees</td>
                 <td>
+                    <a asp-action="Details" asp-route-id="@eventItem.Id">Details</a>
                     <a asp-action="Edit" asp-route-id="@eventItem.Id">Edit</a>
                     <a asp-action="Delete" asp-route-id="@eventItem.Id">Delete</a>
                 </td>

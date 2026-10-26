@@ -11,5 +11,6 @@ namespace EventManagementSystem.Data
         }
 
         public DbSet<Event> Events { get; set; }
+        public DbSet<Venue> Venues { get; set; }
     }
 }
